@@ -21,12 +21,13 @@ xmlhttp.onreadystatechange = function() {
             try {
                 var myArr = JSON.parse(this.responseText);
                 onSuccess(myArr);
+                console.log("loaded!");
             } catch(err) {
                 console.log("Error:", err.message);
             }
         } else {
             console.log("could not load space data.");
-            document.getElementById("loading").innerHTML = "Error Loading!";
+            document.getElementById("loading").innerText = "Error Loading!";
         }
     }
 };
