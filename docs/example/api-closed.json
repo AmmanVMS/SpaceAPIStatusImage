@@ -1,0 +1,27 @@
+{
+    "api": "0.13",
+    "space": "Amman Valley MakerSpace",
+    "logo": "https://raw.githubusercontent.com/AmmanVMS/space.api/main/cropped-cwmammon-icon-transparent-180x180.png",
+    "url": "https://cwmaman.org.uk/makerspace/",
+    "location": {
+        "address": "Youth Resource Center/MakerSpace, Station Road, Glanamman, SA18 1LQ, Wales, United Kingdom",
+        "lon": -3.92288,
+        "lat": 51.80626
+    },
+    "issue_report_channels": [
+        "issue_mail"
+    ],
+    "state": {
+        "open": false,
+        "icon": {
+            "open": "https://ammanvms.github.io/SpaceAPIStatusImage/example/workshop-open.jpg",
+            "closed": "https://ammanvms.github.io/SpaceAPIStatusImage/example/workshop-closed.jpg"
+        }
+    },
+    "projects": [
+        "http://github.com/AmmanVMS"
+    ],
+    "cache": {
+        "schedule": "m.05"
+    }
+}
