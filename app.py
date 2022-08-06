@@ -13,6 +13,10 @@ from flask import Flask, request, redirect
 from urllib.parse import urlparse
 import time
 import os
+import sys
+import io
+import traceback
+from requests.exceptions import ProxyError
 
 
 # parameters
@@ -28,6 +32,11 @@ API_ERROR = """Your JSON data cannot be used this way. Please provide more infor
 See alse https://spaceapi.io/docs/.
 Our problem: """
 STATUS_CODE_STUPID_INPUT = 422
+# badge configuration
+OPEN_TEXT = "open"
+OPEN_COLOR = "lightgreen"
+CLOSED_TEXT = "closed"
+CLOSED_COLOR = "red"
 
 app = Flask(__name__)
 
@@ -60,7 +69,10 @@ def serve_status_image():
 
     # request the url of the endpoint and parse the JSON data
     # see https://pynative.com/parse-json-response-using-python-requests-library/
-    response = requests.get(args["url"])
+    try:
+        response = requests.get(args["url"])
+    except ProxyError:
+        return "Sorry, I am not allowed to connect to that url.", 403
     response.raise_for_status()
     # access JSON content
     jsonResponse = response.json()
@@ -88,21 +100,20 @@ def serve_status_image():
     # We check all icons it once to be sure that people get the error when they try things out.
     # open status image
     # API: The URL to your customized space logo showing an open space 
-    if "open" not in args and "open" not in icon:
-        open_url = make_shields_badge(jsonResponse, "open", "green")
+    open_url = args.get("open", icon.get("open"))
+    if open_url is None:
+        open_url = make_shields_badge(jsonResponse, OPEN_TEXT, OPEN_COLOR)
     else:
-        open_url = args.get("open", icon["open"])
         if urlparse(open_url).scheme not in ["http", "https"]:
             return "We only allow http and https served images for the open status image, not '{}'!".format(open_url), STATUS_CODE_STUPID_INPUT
 
     # closed status image
     # API: The URL to your customized space logo showing a closed space 
-    if "closed" not in args and "closed" not in icon:
-        closed_url = make_shields_badge(jsonResponse, "closed", "red")
-    else:
-        closed_url = args.get("closed", icon["closed"])
-        if urlparse(closed_url).scheme not in ["http", "https"]:
-            return "We only allow http and https served images for the closed status image, not '{}'!".format(closed_url), STATUS_CODE_STUPID_INPUT
+    closed_url = args.get("closed", icon.get("closed"))
+    if closed_url is None:
+        closed_url = make_shields_badge(jsonResponse, CLOSED_TEXT, CLOSED_COLOR)
+    elif urlparse(closed_url).scheme not in ["http", "https"]:
+        return "We only allow http and https served images for the closed status image, not '{}'!".format(closed_url), STATUS_CODE_STUPID_INPUT
 
     # choose the location of the image    
     location = (open_url if is_open else closed_url)
