@@ -96,6 +96,18 @@ Pull requests welcome!
 Deployment
 ----------
 
+You have several ways to deploy this service.
+
+### Heroku
+
+Click this button to deploy this service to [Heroku](https://heroku.com):
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+### Pythonanywhere
+
+You can deploy to Pythonanywhere but then, you cannot access all URLs.
+
 1. Once pushed, head over to [your pythonanywhere console](https://www.pythonanywhere.com/user/SpaceAPIStatusImage/consoles/25127739/) and
     run
     ```

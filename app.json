@@ -1,0 +1,27 @@
+{
+  "name": "SpaceAPI Status Image",
+  "description": "Embed a status image for the space API into your website.",
+  "repository": "https://github.com/AmmanVMS/SpaceAPIStatusImage",
+  "website": "https://ammanvms.github.io/SpaceAPIStatusImage/",
+  "success_url": "/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-open.json",
+  "env": {
+    "APP_DEBUG": {
+      "description": "Whether to use debug mode to run the app (true/false). It defaults to true.",
+      "value": "true",
+      "required": false
+    },
+    "APP_INDEX": {
+      "description": "A url to the configuration page.",
+      "value": "https://ammanvms.github.io/SpaceAPIStatusImage/",
+      "required": false
+    }
+  },
+  "image": "heroku/python",
+  "keywords": [
+    "SpaceAPI",
+    "image",
+    "badge",
+    "open-source"
+  ]
+}
+
