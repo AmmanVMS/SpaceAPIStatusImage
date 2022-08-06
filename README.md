@@ -16,6 +16,25 @@ API
 These hosts serve the API:
 - [SpaceAPIStatusImage.pythonanywhere.com](https://SpaceAPIStatusImage.pythonanywhere.com)
 
+API:
+- `/` redirects to the configuration.
+- `/status` redirects to the image.  
+    Parameters:
+    - `url` required - a url to the SpaceAPI endpoint
+    - `open` optional - a url to an image to show when the space is open.  
+        This will replace the image specified in `state->icon->open`.
+    - `closed` optional - a url to an image to show when the space is closed.  
+        This will replace the image specified in `state->icon->closed`.
+
+Examples:
+
+[![open][open]][open]
+[![closed][closed]][closed]
+
+[closed]: https://SpaceAPIStatusImage.pythonanywhere.com/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-closed.json
+[open]: https://SpaceAPIStatusImage.pythonanywhere.com/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-oepn.json
+
+
 Pythonanywhere
 --------------
 
