@@ -48,7 +48,7 @@ function getUrl(status) {
     // get params
     var server = document.getElementById("server").value;
     var params = new URLSearchParams();
-    params.set("url", document.getElementById("spaces").value);
+    params.set("url", document.getElementById("spaceurl").value);
     var open = document.getElementById("open").value;
     if (open) {
         params.set("open", open);
@@ -62,6 +62,11 @@ function getUrl(status) {
     }
     // construct url
     return server + "/status?" + params.toString();
+}
+
+function spaceChanged() {
+    document.getElementById("spaceurl").value = document.getElementById("spaces").value;
+    showImage();
 }
 
 function showImage() {
