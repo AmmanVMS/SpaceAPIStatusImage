@@ -70,17 +70,16 @@ Pull requests welcome!
 Deployment
 ----------
 
-Once deployed, head over to [pythonanywhere](https://pythonanywhere.com) and
-run
-```
-cd SpaceAPIStatusImage
-git pull
-```
-
-Then, reload the web service.
+1. Once pushed, head over to [your pythonanywhere console](https://www.pythonanywhere.com/user/SpaceAPIStatusImage/consoles/25127739/) and
+    run
+    ```
+    cd SpaceAPIStatusImage
+    git pull
+    ```
+2. Reload the [web service](https://www.pythonanywhere.com/user/SpaceAPIStatusImage/webapps/#tab_id_spaceapistatusimage_pythonanywhere_com).
 
 
 License
 -------
 
-This software is licensed in [AGPLv3](LICENSE).
+This software is free and licensed under [AGPLv3](LICENSE).
