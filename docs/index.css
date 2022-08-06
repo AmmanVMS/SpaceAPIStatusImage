@@ -12,3 +12,7 @@ input {
     display: block;
     width: 95%;
 }
+
+.preview {
+    max-width: 95%;
+}
