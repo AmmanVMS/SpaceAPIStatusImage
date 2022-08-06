@@ -26,7 +26,7 @@ API:
     - `closed` optional - a url to an image to show when the space is closed.  
         This will replace the image specified in `state->icon->closed`.
 
-Examples:
+Examples (copy the link because it redirects):
 
 [![open][open]][open]
 [![closed][closed]][closed]
