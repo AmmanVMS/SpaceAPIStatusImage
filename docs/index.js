@@ -96,3 +96,7 @@ function escapeHTML(str){
     return new Option(str).innerHTML;
 }
 
+window.addEventListener("load", function() {
+    spaceChanged();
+});
+
