@@ -32,7 +32,7 @@ Examples:
 [![closed][closed]][closed]
 
 [closed]: https://SpaceAPIStatusImage.pythonanywhere.com/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-closed.json
-[open]: https://SpaceAPIStatusImage.pythonanywhere.com/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-oepn.json
+[open]: https://SpaceAPIStatusImage.pythonanywhere.com/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-open.json
 
 
 Pythonanywhere

@@ -64,14 +64,14 @@ def serve_status_image():
     # open status image
     # API: The URL to your customized space logo showing an open space 
     assert "open" in args or "open" in icon, "https://spaceapi.io/docs/ - Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
-    open_url = args["open"] or icon["open"]
-    assert urlparse(url_open).scheme in ["http", "https"], "We only allow http and https served images for the open status!"
+    open_url = args.get("open", icon["open"])
+    assert urlparse(open_url).scheme in ["http", "https"], "We only allow http and https served images for the open status!"
 
     # closed status image
     # API: The URL to your customized space logo showing a closed space 
     assert "closed" in args or "closed" in icon, "https://spaceapi.io/docs/ - Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
-    closed_url = args["closed"] or icon["closed"]
-    assert urlparse(url_closed).scheme in ["http", "https"], "We only allow http and https served images for the closed status!"
+    closed_url = args.get("closed", icon["closed"])
+    assert urlparse(closed_url).scheme in ["http", "https"], "We only allow http and https served images for the closed status!"
 
     # choose the location of the image    
     location = (open_url if is_open else closed_url)
