@@ -27,8 +27,18 @@ INDEX = os.environ.get("APP_INDEX", "https://ammanvms.github.io/SpaceAPIStatusIm
 API_ERROR = """Your JSON data cannot be used this way. Please provide more information!
 See alse https://spaceapi.io/docs/.
 Our problem: """
+STATUS_CODE_STUPID_INPUT = 422
 
 app = Flask(__name__)
+
+
+def make_shields_badge(data, text, color):
+    """Create a link to a shields.io badge."""
+    label = data.get("space", "space")
+    # replace - with -- and _ with __ according to https://shields.io
+    label = label.replace("-", "--").replace("_", "__")
+    return "https://img.shields.io/badge/{label}-{message}-{color}".format(
+        color=color, message=text, label=label)
 
 
 @app.route('/status')
@@ -38,12 +48,14 @@ def serve_status_image():
     # get and check the parameters
     # see https://stackabuse.com/get-request-query-parameters-with-flask/
     args = request.args.to_dict()
-    assert "url" in args, "Please specify the url parameter of the SpaceAPI endpoint."
+    if "url" not in args:
+        return "Please specify the 'url' parameter of the SpaceAPI endpoint.", STATUS_CODE_STUPID_INPUT
 
     # parse the url
     # see https://docs.python.org/3/library/urllib.parse.html
     url = urlparse(args["url"])
-    assert url.scheme in ["http", "https"], "We only allow http and https requests to endpoints!"
+    if url.scheme not in ["http", "https"]:
+        return "We only allow http and https requests to endpoints!", STATUS_CODE_STUPID_INPUT
     time.sleep(0.001) # DDOS protection for other servers
 
     # request the url of the endpoint and parse the JSON data
@@ -55,15 +67,19 @@ def serve_status_image():
 
     # look up the required fields
     state = jsonResponse.get("state")
-    assert state, API_ERROR + "we assume an entry called 'state'."
+    if not state:
+        return API_ERROR + "we assume an entry called 'state'.", STATUS_CODE_STUPID_INPUT
     # open can be null, absent (unkown) and True/False
-    assert "open" in state, API_ERROR + "we assume an entry called 'state->open' that shows the status."
+    if "open" not in state:
+        return API_ERROR + "we assume an entry called 'state->open' that shows the status.", STATUS_CODE_STUPID_INPUT
     is_open = state["open"]
-    assert is_open in [True, False, None], "https://spaceapi.io/docs/ - these values mean something!"
+    if is_open not in [True, False, None]:
+        return API_ERROR + "these values mean something!", STATUS_CODE_STUPID_INPUT
 
     # replace the current status of the api with an optional parameter
     if "status" in args:
-        assert args["status"] in ["open", "closed"], "The optional status parameter must be open or closed!"
+        if args["status"] not in ["open", "closed"]:
+            return "The optional status parameter must be open or closed!", STATUS_CODE_STUPID_INPUT
         is_open = args["status"] == "open"
 
     # get the icon, might be absent but in parameters
@@ -72,15 +88,21 @@ def serve_status_image():
     # We check all icons it once to be sure that people get the error when they try things out.
     # open status image
     # API: The URL to your customized space logo showing an open space 
-    assert "open" in args or "open" in icon, API_ERROR + "Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
-    open_url = args.get("open", icon["open"])
-    assert urlparse(open_url).scheme in ["http", "https"], "We only allow http and https served images for the open status image!"
+    if "open" not in args and "open" not in icon:
+        open_url = make_shields_badge(jsonResponse, "open", "green")
+    else:
+        open_url = args.get("open", icon["open"])
+        if urlparse(open_url).scheme not in ["http", "https"]:
+            return "We only allow http and https served images for the open status image, not '{}'!".format(open_url), STATUS_CODE_STUPID_INPUT
 
     # closed status image
     # API: The URL to your customized space logo showing a closed space 
-    assert "closed" in args or "closed" in icon, API_ERROR + "Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
-    closed_url = args.get("closed", icon["closed"])
-    assert urlparse(closed_url).scheme in ["http", "https"], "We only allow http and https served images for the closed status image!"
+    if "closed" not in args and "closed" not in icon:
+        closed_url = make_shields_badge(jsonResponse, "closed", "red")
+    else:
+        closed_url = args.get("closed", icon["closed"])
+        if urlparse(closed_url).scheme not in ["http", "https"]:
+            return "We only allow http and https served images for the closed status image, not '{}'!".format(closed_url), STATUS_CODE_STUPID_INPUT
 
     # choose the location of the image    
     location = (open_url if is_open else closed_url)

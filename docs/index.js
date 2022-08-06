@@ -53,7 +53,7 @@ function getUrl(status) {
     if (open) {
         params.set("open", open);
     }
-    var closed = document.getElementById("open").value;
+    var closed = document.getElementById("closed").value;
     if (closed) {
         params.set("closed", closed);
     }
