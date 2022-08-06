@@ -24,6 +24,10 @@ DEBUG = os.environ.get("APP_DEBUG", "true").lower() == "true"
 INDEX = os.environ.get("APP_INDEX", "https://ammanvms.github.io/SpaceAPIStatusImage/")
 
 
+API_ERROR = """Your JSON data cannot be used this way. Please provide more information!
+See alse https://spaceapi.io/docs/.
+Our problem: """
+
 app = Flask(__name__)
 
 
@@ -51,11 +55,16 @@ def serve_status_image():
 
     # look up the required fields
     state = jsonResponse.get("state")
-    assert state, "https://spaceapi.io/docs/ - we assume an entry called 'state'."
+    assert state, API_ERROR + "we assume an entry called 'state'."
     # open can be null, absent (unkown) and True/False
-    assert "open" in state, "https://spaceapi.io/docs/ - we assume an entry called 'state->open' that shows the status."
+    assert "open" in state, API_ERROR + "we assume an entry called 'state->open' that shows the status."
     is_open = state["open"]
     assert is_open in [True, False, None], "https://spaceapi.io/docs/ - these values mean something!"
+
+    # replace the current status of the api with an optional parameter
+    if "status" in args:
+        assert args["status"] in ["open", "closed"], "The optional status parameter must be open or closed!"
+        is_open = args["status"] == "open"
 
     # get the icon, might be absent but in parameters
     icon = state.get("icon", {}) # Icons that show the status graphically 
@@ -63,15 +72,15 @@ def serve_status_image():
     # We check all icons it once to be sure that people get the error when they try things out.
     # open status image
     # API: The URL to your customized space logo showing an open space 
-    assert "open" in args or "open" in icon, "https://spaceapi.io/docs/ - Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
+    assert "open" in args or "open" in icon, API_ERROR + "Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
     open_url = args.get("open", icon["open"])
-    assert urlparse(open_url).scheme in ["http", "https"], "We only allow http and https served images for the open status!"
+    assert urlparse(open_url).scheme in ["http", "https"], "We only allow http and https served images for the open status image!"
 
     # closed status image
     # API: The URL to your customized space logo showing a closed space 
-    assert "closed" in args or "closed" in icon, "https://spaceapi.io/docs/ - Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
+    assert "closed" in args or "closed" in icon, API_ERROR + "Either specify state->state->icon->open or pass a parameter open= in the URL as a parameter."
     closed_url = args.get("closed", icon["closed"])
-    assert urlparse(closed_url).scheme in ["http", "https"], "We only allow http and https served images for the closed status!"
+    assert urlparse(closed_url).scheme in ["http", "https"], "We only allow http and https served images for the closed status image!"
 
     # choose the location of the image    
     location = (open_url if is_open else closed_url)

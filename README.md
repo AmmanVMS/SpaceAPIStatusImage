@@ -3,6 +3,11 @@ SpaceAPIStatusImage
 
 Simple service to display a status image for space API endpoints.
 
+How to help: The Heroku service would be slow to load and the Pythonanywhere service
+need renewing each 3 months. If I get 5 Euro together (fund via GitHub Sponsors), then
+I can get a Hacker Account on Pythonanywhere.com.
+They are pretty cool and we should fund them (through me^^)! 
+
 Usage
 -----
 
@@ -25,6 +30,8 @@ API:
         This will replace the image specified in `state->icon->open`.
     - `closed` optional - a url to an image to show when the space is closed.  
         This will replace the image specified in `state->icon->closed`.
+    - `status` optional - use to replace the `status->open` value.
+        Values: `open` or `closed`.
 
 Examples (copy the link because it redirects):
 

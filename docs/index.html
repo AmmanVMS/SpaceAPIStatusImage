@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>SpaceAPI open/closed Image</title>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <main>
+        <h1>SpaceAPI open/closed Image</h1>
+        <p>
+            Here, you can configure your open/closed image for the SpaceAPI.
+        </p>
+        <h2>Customization</h2>
+        <!-- option menu from https://blog.hubspot.com/website/html-dropdown -->
+        <label for="spaces">Choose a hackerspace:</label>
+        <select name="spaces" id="spaces" onchange="showImage()" >
+          <option value="" id="loading">Loading...</option>
+        </select>
+        <br/>
+        <label for="server">Choose a server:</label>
+        <select name="server" id="server" onchange="showImage()" >
+          <option value="https://spaceapistatusimage.pythonanywhere.com">SpaceAPIStatusImage.pythonanywhere.com</option>
+          <option value="http://localhost:5000">localhost:5000</option>
+        </select>
+        <br/>
+        <label for="open">Replace the url to the open image:</label>
+        <input type="text" id="open"  onchange="showImage()" />
+        <br/>
+        <label for="closed">Replace the url to the closed image:</label>
+        <input type="text" id="closed"  onchange="showImage()" />
+        <hr/>
+        <!-- embed image form https://www.ionos.com/digitalguide/websites/website-creation/svg-format-how-to-embed-svg-vector-graphics/ -->
+        Link to image: <a href="" id="imagelink" target="_blank"></a><br/>
+        <div class="preview">
+            Current Image:<br/>
+            <a href="" id="imageNowLink"><img src="" id="imageNow" /></a>
+        </div>
+        <div class="preview">
+            Open Image:<br/>
+            <a href="" id="imageOpenLink"><img src="" id="imageOpen" /></a>
+        </div>
+        <div class="preview">
+            Closed Image:<br/>
+            <a href="" id="imageClosedLink"><img src="" id="imageClosed" /></a>
+        </div>
+        <hr/>
+        <p>
+            Here you can see if there is an error. You can also click the image links.
+        </p>
+        <iframe id="error"></iframe>
+        <hr/>
+        You can view the code on <a href="https://github.com/AmmanVMS/SpaceAPIStatusImage">GitHub</a>.
+        This is open-source software licensed under <a href="https://github.com/AmmanVMS/SpaceAPIStatusImage/blob/main/LICENSE">GPLv3</a>.
+    </main>
+  </body>
+</html>
+
+
