@@ -87,6 +87,24 @@ These are parameters for configuration:
 - `INDEX` - a url to the configuration page, `https://ammanvms.github.io/SpaceAPIStatusImage/` by default
     The url that serves the configuration files.
 
+Docker
+------
+
+You can use Docker to build the project:
+
+```
+docker build --tag niccokunzmann/spaceapistatusimage .
+```
+
+This is how you run the built container:
+
+```
+docker run -d --rm -p 5000:80 niccokunzmann/spaceapistatusimage
+```
+
+Choose `localhost:5000` as the server.
+
+
 Development
 -----------
 
