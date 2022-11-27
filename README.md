@@ -18,8 +18,8 @@ Head over to [ammanvms.github.io/SpaceAPIStatusImage][web] and configure the ser
 API
 ---
 
-These hosts serve the API:
-- [SpaceAPIStatusImage.pythonanywhere.com](https://SpaceAPIStatusImage.pythonanywhere.com)
+To view a list of hosts, visit the web page or `docs/index.html`.
+If you host it yourself, consider adding your host to the list.
 
 API:
 - `/` redirects to the configuration.
