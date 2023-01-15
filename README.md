@@ -38,8 +38,8 @@ Examples (copy the link because it redirects):
 [![open][open]][open]
 [![closed][closed]][closed]
 
-[closed]: https://SpaceAPIStatusImage.pythonanywhere.com/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-closed.json
-[open]: https://SpaceAPIStatusImage.pythonanywhere.com/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-open.json
+[closed]: https://https://spaceapistatusimage.hosted.quelltext.eu/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-closed.json
+[open]: https://https://spaceapistatusimage.hosted.quelltext.eu/status?url=https://ammanvms.github.io/SpaceAPIStatusImage/example/api-open.json
 
 
 Pythonanywhere
